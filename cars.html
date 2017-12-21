@@ -6,7 +6,7 @@
 <body>
 	<script>
 		//made cars
-		function createCars(year,make,plate) {
+		function Car (year,make,plate) {
 			this.year = year;
 			this.make = make;
 			this.plate = plate;
@@ -14,21 +14,45 @@
 			 return this;
 
 		}
-
-		//created a car model
-		var car = new car (2017,"chevy" , 1 );
-
-		console.log(car made);
+	
 
 		//group of cars to park
 		var carGroup = [];
 		var carMake =["ford", "toyota", "jeep", "chevy"];
 		var carYears = [2000, 2001, 2002, 2003, 2004, 2005];
-         
-         for(var i=0; i< 101; i++){
-         	
+         //create 100 cars
+         for(var i=0; i< 100; i++){
+         	carGroup.push(new Car(2000,"chevy",i+1))
+
          }
-		
+		//create parking space
+		function parkingSpace(id){
+         	this.id = id;
+         	this.vacant = true;
+         	return this;
+         }
+         var openspace =[];
+         var space = [];
+         //group of spots to park
+         //create 10 spots
+         for(var i=0; i<10; i++){
+         	openspace.push(new parkingSpace(i+1))
+
+         }
+         //park 10 cars
+         function parkCar(){
+         	for (var i = 0; i<openspace.length; i++){
+         		console.log(i, openspace[i]);
+         	}
+         }
+
+         console.log(openspace);
+
+         	
+         
+
+		console.log(carGroup);	
+
 
 	</script>
 
