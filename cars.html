@@ -17,7 +17,8 @@
 	
 
 		//group of cars to park
-		var carGroup = [];
+		var unparkedCars[];
+		var parkedCars[];
 		var carMake =["ford", "toyota", "jeep", "chevy"];
 		var carYears = [2000, 2001, 2002, 2003, 2004, 2005];
          //create 100 cars
@@ -28,12 +29,11 @@
 		//create parking space
 		function parkingSpace(id){
          	this.id = id;
-         	this.vacant = true;
+         	this.openspace = true;
          	return this;
          }
-         var openspace =[];
-         var space = [];
-         //group of spots to park
+         
+         //group of spots to park cars in
          //create 10 spots
          for(var i=0; i<10; i++){
          	openspace.push(new parkingSpace(i+1))
@@ -41,17 +41,90 @@
          }
          //park 10 cars
          function parkCar(){
+         	//check for unparked cars
+         	//check for open space
+         	//if there is a car to park and an open space then both == true
          	for (var i = 0; i<openspace.length; i++){
-         		console.log(i, openspace[i]);
+         		if(openspace[i].vacant==true){
+         			console.log(i, openspace[i]);
+         			
+         		}
          	}
          }
 
-         console.log(openspace);
+
+         if(unparkedCars.length > 0 && openspace.length > 0){
+         	var car = unparkedCars.shift();
+         	//shift method to remove first item in array and return it
+         	var space = openspace.shift();
+         	car.parked = true;
+         	//filled space
+         	space.open =false;
+         	console.log ("car" + i + " park in space ");
+
+         	parkedCars.push(car);
+         	openspace.push(space);
+
+         	console.log ("Car " + car.plate + " (" + car.make + " - " + car.year + ")parked in space " );		
+
+
+         }
+         //create parking spaces for timer
+         var emptySpace = [];
+         var filledSpace = [];
+         //make cars leave the space after time is up
+         carLeavesSpace(car, space);
+
+         function carLeavesSpace (car, space){
+         	var seconds = getRandomArbitrary(1000, 5000);
+         	//set time out for the car to leave a parking spot
+         	setTimeout(function (){
+         		car.parked = false;
+         		space.openspace = true;
+
+         		var carIndex = parkedCars.indexOf(car);
+         		parkedCars.splice(spaceIndex, 1);
+         		//splice to remove an item and return an item example bunny mouse deer
+         		//animals.splice(2,1, "dog", "cat");
+         		//bunny mouse dog cat
+         		//space index to check index of space of given string, return index number in string
+
+         		var spaceIndex = filledSpace.indexOf(space);
+         		filledSpace.splice(spaceIndex, 1);
+         		emptySpace.push(space);
+
+         		console.log(" car " + car.plate + "(" + car.make + " - " + car.year + ") left space " + space.id + " after " + seconds + "miliseconds.");
+
+         	}
+         }
+         
+         setTimeout(function(){
+
+
+
+         var intervalId = setInterval(function(){
+         	parkACar();
+
+         	if (unparkedCars.length == 0){
+         		clearInterval(intervalId);
+         		console.log("EVERYBODY GO HOME!!!")
+         }
+         	
+
+
+       }        	
+
+     },100);
+
+         function getRandomArbitrary(min,max){
+
+         	return Math.random() * (max - min) + min;
+         }
+
 
          	
          
-
-		console.log(carGroup);	
+	
 
 
 	</script>
